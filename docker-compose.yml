@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  php:
+    container_name: php
+    image: sneezh/php-8:latest
+    volumes:
+      - ./:/var/www/html:cached
+      - ./volumes/php/php.ini:/usr/local/etc/php/php.ini:delegated
+      - ./volumes/php/conf.d/docker-php-ext-xdebug.ini:/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini:delegated
+      - ./volumes/php/conf.d/docker-php-ext-rdkafka.ini:/usr/local/etc/php/conf.d/docker-php-ext-rdkafka.ini:delegated
+    environment:
+      XDEBUG_CONFIG: remote_host=${DEBUG_REMOTE_HOST} remote_port=${DEBUG_REMOTE_PORT} remote_enable=1 idekey=${DEBUG_IDEKEY}
+      PHP_IDE_CONFIG: serverName=${DEBUG_SERVER_NAME}
+    restart: always
+
+  nginx:
+    container_name: nginx
+    image: nginx
+    volumes:
+      - ./volumes/nginx:/etc/nginx
+      - ./var/log/nginx:/var/log/nginx
+      - ./:/var/www/html
+    ports:
+      - ${NGINX_PORT}:80
+    tty: true
+    depends_on:
+      - php
+    restart: always
+
+  mysql:
+    container_name: mysql
+    user:
+      "1000:1000"
+    image: mysql
+    command: "--innodb_use_native_aio=0"
+    volumes:
+    - ./volumes/mysql/data:/var/lib/mysql:cached
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+    ports:
+    - 3306:3306
