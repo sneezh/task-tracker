@@ -28,16 +28,17 @@ services:
       - php
     restart: always
 
-  mysql:
-    container_name: mysql
-    user:
-      "1000:1000"
-    image: mysql
-    command: "--innodb_use_native_aio=0"
-    volumes:
-    - ./volumes/mysql/data:/var/lib/mysql:cached
-    environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-      MYSQL_DATABASE: ${MYSQL_DATABASE}
+  postgres:
+    image: postgres:13
+    container_name: postgres
     ports:
-    - 3306:3306
+      - ${POSTGRES_PORT}:5432
+    volumes:
+      - ./volumes/postgres:/var/lib/postgresql/db-files
+    restart: always
+    environment:
+      - POSTGRES_DB=${DATABASE_NAME}
+      - POSTGRES_USER=${DATABASE_USER}
+      - POSTGRES_PASSWORD=${DATABASE_PASSWORD}
+#    command: postgres -c shared_buffers=1024MB -c effective_cache_size=2048MB -c maintenance_work_mem=256MB
+#    shm_size: '1gb'

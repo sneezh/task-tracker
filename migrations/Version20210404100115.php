@@ -31,8 +31,7 @@ final class Version20210404100115 extends AbstractMigration
                 created_at timestamp default CURRENT_TIMESTAMP not null,
                 updated_at timestamp default CURRENT_TIMESTAMP not null,
                 deleted_at timestamp null,
-                constraint task_pk
-                    primary key (id)
+                PRIMARY KEY(id)
             )
         ");
     }

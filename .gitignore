@@ -1,7 +1,7 @@
 .idea/
 .DS_Store
 .env
-volumes/mysql/data/*
+volumes/postgres
 vendor/*
 
 ###> symfony/framework-bundle ###
