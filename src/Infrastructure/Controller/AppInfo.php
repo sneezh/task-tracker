@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Controller;
+namespace App\Infrastructure\Controller;
 
 use Swagger\Annotations as SWG;
 use Symfony\Component\HttpFoundation\Response;

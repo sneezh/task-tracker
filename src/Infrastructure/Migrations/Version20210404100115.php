@@ -21,7 +21,7 @@ final class Version20210404100115 extends AbstractMigration
     {
         $this->addSql("create table task
             (
-                id varchar(10) not null,
+                id uuid not null,
                 author_id int not null,
                 executor_id int null,
                 status int not null default 0,
