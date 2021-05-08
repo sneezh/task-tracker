@@ -15,5 +15,5 @@ doctrine:
                 is_bundle: false
                 type: xml
                 dir: '%kernel.project_dir%/config/mappings/orm'
-                prefix: 'Domain'
+                prefix: 'App\Domain'
                 alias: Domain
