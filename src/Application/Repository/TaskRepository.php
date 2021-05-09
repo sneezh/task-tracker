@@ -6,6 +6,7 @@ namespace App\Application\Repository;
 
 use App\Application\Common\Exception\NotImplementedException;
 use App\Domain\Task\Model\Task;
+use App\Domain\Task\Model\TaskCollection;
 use App\Domain\Task\Repository\TaskCriteria;
 use App\Domain\Task\Repository\TaskRepositoryInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -22,7 +23,7 @@ final class TaskRepository extends ServiceEntityRepository implements TaskReposi
     /**
      * @inheritDoc
      */
-    public function findAllByCriteria(TaskCriteria $criteria): array
+    public function findAllByCriteria(TaskCriteria $criteria): TaskCollection
     {
         $qb = $this->createQueryBuilder('task');
 
@@ -33,7 +34,7 @@ final class TaskRepository extends ServiceEntityRepository implements TaskReposi
 
         $query = $qb->getQuery();
 
-        return $query->getResult();
+        return new TaskCollection(...$query->getResult());
     }
 
     public function findOneById(UuidInterface $id): ?Task

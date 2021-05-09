@@ -40,5 +40,23 @@ services:
       - POSTGRES_DB=${DATABASE_NAME}
       - POSTGRES_USER=${DATABASE_USER}
       - POSTGRES_PASSWORD=${DATABASE_PASSWORD}
-#    command: postgres -c shared_buffers=1024MB -c effective_cache_size=2048MB -c maintenance_work_mem=256MB
-#    shm_size: '1gb'
+
+  zookeeper:
+    image: 'bitnami/zookeeper:latest'
+    ports:
+      - ${ZOOKEEPER_PORT}:2181
+    environment:
+      - ALLOW_ANONYMOUS_LOGIN=yes
+
+  kafka:
+    image: 'bitnami/kafka:latest'
+    ports:
+      - ${KAFKA_PORT}:9092
+    environment:
+      - KAFKA_BROKER_ID=1
+      - KAFKA_CFG_LISTENERS=PLAINTEXT://:${KAFKA_PORT}
+      - KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT://192.168.99.103:${KAFKA_PORT}
+      - KAFKA_CFG_ZOOKEEPER_CONNECT=zookeeper:${ZOOKEEPER_PORT}
+      - ALLOW_PLAINTEXT_LISTENER=yes
+    depends_on:
+      - zookeeper
