@@ -1,0 +1,22 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+
+  App\Core\:
+    resource: '../../../src/Core/*'
+    exclude: '../../../src/Core/{*/Model,*/Event,*/CommandBus/*Command.php}'
+
+  App\Core\Infrastructure\Controller\:
+    resource: '../../../src/Core/Infrastructure/Controller'
+    tags: ['controller.service_arguments']
+
+  _instanceof:
+    # -- Messenger -------------------------------------------------------------------------
+    App\Common\Application\CommandBus\CommandHandlerInterface:
+      tags:
+        - { name: 'messenger.message_handler', bus: 'command.bus' }
+
+    App\Common\Application\EventBus\EventHandlerInterface:
+      tags:
+        - { name: 'messenger.message_handler', bus: 'event.bus' }

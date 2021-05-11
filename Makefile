@@ -33,3 +33,11 @@ console:
 
 migrate:
 	$(de-php) 'bin/console doctrine:migrations:migrate --no-interaction'
+
+
+### ---------------------
+###	Help
+### ---------------------
+# ignore all not-found targets
+%:
+	@:

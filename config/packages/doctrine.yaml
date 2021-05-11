@@ -11,9 +11,9 @@ doctrine:
         naming_strategy: doctrine.orm.naming_strategy.underscore_number_aware
         auto_mapping: true
         mappings:
-            App:
+            CoreDomain:
                 is_bundle: false
                 type: xml
-                dir: '%kernel.project_dir%/config/mappings/orm'
-                prefix: 'App\Domain'
-                alias: Domain
+                dir: '%kernel.project_dir%/config/modules/Core/orm/domain'
+                prefix: 'App\Core\Domain\Model'
+                alias: CoreDomain

@@ -1,0 +1,29 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+
+  App\Common\:
+    resource: '../../../src/Common/*'
+    exclude: '../../../src/Common/{Domain}'
+
+  _instanceof:
+    # -- Messenger ------------------------------------------------------
+
+    App\Common\Application\CommandBus\CommandHandlerInterface:
+      tags:
+        - { name: 'messenger.message_handler', bus: 'command.bus' }
+
+    App\Common\Application\EventBus\EventHandlerInterface:
+      tags:
+        - { name: 'messenger.message_handler', bus: 'event.bus' }
+
+  ## -- Adapter --------------------------------------------------------------------------
+
+  App\Common\Infrastructure\Adapter\Application\CommandBus\CommandBus:
+    arguments:
+      $messageBus: '@command.bus'
+
+  App\Common\Infrastructure\Adapter\Application\EventBus\EventBus:
+    arguments:
+      $messageBus: '@event.bus'

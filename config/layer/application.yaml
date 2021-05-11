@@ -1,8 +1,0 @@
-services:
-    _defaults:
-        autowire: true
-        autoconfigure: true
-
-    App\Application\:
-        resource: '../../src/Application/*'
-#        exclude: '../../src/Application/{Dto}'

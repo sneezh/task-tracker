@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                          https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity name="App\Core\Domain\Model\Task" table="`task`">
+        <id name="id" type="uuid"/>
+        <field name="authorId" column="author_id"/>
+        <field name="executorId" column="executor_id" nullable="true"/>
+        <field name="status" column="status"/>
+        <field name="title" nullable="true"/>
+        <field name="description" nullable="true"/>
+
+        <field name="createdAt" column="created_at" type="datetime_immutable"/>
+        <field name="updatedAt" column="updated_at" type="datetime_immutable"/>
+    </entity>
+</doctrine-mapping>
